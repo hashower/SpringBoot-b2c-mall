@@ -8,7 +8,7 @@ spring:
 
 mybatis-plus:
   # 指定mappers路径
-#  mapper-locations: classpath:mappers/*.xml
+  #  mapper-locations: classpath:mappers/*.xml
   # 指定实体类路径
   type-aliases-package: cn.luxun.mall.entity
   configuration:
