@@ -19,7 +19,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**").allowedOrigins("http://localhost:8080");
 	}
-
+/*
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 
@@ -32,5 +32,5 @@ public class InterceptorConfig implements WebMvcConfigurer {
 				// 添加swagger-ui的放行路径
 				.excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**", "/doc.html/**")
 		;
-	}
+	}*/
 }
