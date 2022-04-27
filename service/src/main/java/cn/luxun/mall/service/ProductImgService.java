@@ -10,8 +10,8 @@ public interface ProductImgService {
 	/**
 	 * 根据商品id查询当前商品的图片信息
 	 *
-	 * @param id
+	 * @param item_id
 	 * @return
 	 */
-	List<ProductImg> getProductImgById(String id);
+	List<ProductImg> getProductImgById(String item_id);
 }

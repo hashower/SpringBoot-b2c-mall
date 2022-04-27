@@ -1,5 +1,6 @@
 package cn.luxun.mall.vo;
 
+import cn.luxun.mall.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,4 +38,7 @@ public class CategoryVo {
 
 	// 实现首页的类别显示
 	private List<CategoryVo> categories;
+
+	//实现首页分类商品推荐
+	private List<ProductVo> products;
 }

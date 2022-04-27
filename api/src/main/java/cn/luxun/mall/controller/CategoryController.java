@@ -26,7 +26,19 @@ public class CategoryController {
 	 */
 	@GetMapping("/list")
 	@ApiOperation("商品分类查询接口")
-	public ResultVo listCatetory() {
-		return categoryService.getCategoriesList();
+	public ResultVo getAllCategories() {
+		return categoryService.getAllCategories();
 	}
+
+	/**
+	 * 分类推荐新品列表
+	 *
+	 * @return
+	 */
+	@GetMapping("/recommendProducts")
+	@ApiOperation("分类推荐接口")
+	public ResultVo getRecommendProductsByCategory() {
+		return categoryService.getRecommendProductsByCategory();
+	}
+
 }

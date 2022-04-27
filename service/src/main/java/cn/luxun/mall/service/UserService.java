@@ -27,10 +27,10 @@ public interface UserService extends IService<User> {
 	/**
 	 * 根据id寻找User
 	 *
-	 * @param id
+	 * @param user_id
 	 * @return
 	 */
-	ResultVo findUserById(Integer id);
+	ResultVo findUserById(Integer user_id);
 
 	/**
 	 * 校验token是否有效

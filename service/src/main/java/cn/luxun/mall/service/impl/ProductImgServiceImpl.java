@@ -14,13 +14,13 @@ import java.util.List;
 public class ProductImgServiceImpl extends ServiceImpl<ProductImgMapper, ProductImg> implements ProductImgService {
 
 	@Override
-	public List<ProductImg> getProductImgById(String id) {
+	public List<ProductImg> getProductImgById(String item_id) {
 
 		// 条件构造器
 		LambdaQueryWrapper<ProductImg> queryWrapper = new LambdaQueryWrapper<>();
 
 		// 添加条件
-		queryWrapper.eq(ProductImg::getItemId, id);
+		queryWrapper.eq(ProductImg::getItemId, item_id);
 
 		List<ProductImg> list = this.list(queryWrapper);
 		return list;

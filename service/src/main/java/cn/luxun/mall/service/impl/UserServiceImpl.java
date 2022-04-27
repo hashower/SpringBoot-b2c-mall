@@ -73,8 +73,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	}
 
 	@Override
-	public ResultVo findUserById(Integer id) {
-		User user = this.getById(id);
+	public ResultVo findUserById(Integer user_id) {
+		User user = this.getById(user_id);
 		System.out.println(ResultVo.success(user));
 		return ResultVo.success(user);
 	}

@@ -9,5 +9,12 @@ public interface CategoryService {
 	 *
 	 * @return
 	 */
-	ResultVo getCategoriesList();
+	ResultVo getAllCategories();
+
+	/**
+	 * 分类推荐新品列表
+	 *
+	 * @return
+	 */
+	ResultVo getRecommendProductsByCategory();
 }
