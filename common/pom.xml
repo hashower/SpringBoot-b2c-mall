@@ -11,5 +11,23 @@
 
     <artifactId>mall-common</artifactId>
     <packaging>jar</packaging>
+    <dependencies>
+
+        <!--beans-->
+        <dependency>
+            <groupId>cn.luxun</groupId>
+            <artifactId>mall-beans</artifactId>
+            <version>0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.19.1</version>
+        </dependency>
+    </dependencies>
 
 </project>

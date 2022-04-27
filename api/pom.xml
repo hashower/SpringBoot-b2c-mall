@@ -20,6 +20,19 @@
             <version>0.0.1</version>
         </dependency>
 
+        <!--引入 SpringBoot 核心启动器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <!-- 排除 默认使用的logback  -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!--spring-boot-starter-web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,13 +52,6 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>3.0.3</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-            <version>3.19.1</version>
         </dependency>
 
     </dependencies>

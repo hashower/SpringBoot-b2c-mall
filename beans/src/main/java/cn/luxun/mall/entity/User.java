@@ -42,8 +42,8 @@ public class User {
 	private Date birthday;
 
 	// 创建时间
-	private Date create_time;
+	private Date createTime;
 
 	// 更新时间
-	private Date update_time;
+	private Date updateTime;
 }
