@@ -10,6 +10,8 @@ import cn.luxun.mall.vo.ResultVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sun.deploy.net.HttpRequest;
+import com.sun.deploy.net.HttpResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 

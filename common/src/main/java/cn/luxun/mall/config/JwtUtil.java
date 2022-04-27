@@ -29,8 +29,7 @@ public class JwtUtil {
 		map.put("alg", "HS256");
 		map.put("typ", "JWT");
 
-		String token = JWT.create()
-				.withHeader(map)// 添加头部
+		String token = JWT.create().withHeader(map)// 添加头部
 				//可以将基本信息放到claims中
 				.withClaim("id", user.getId())//userId
 				.withClaim("userName", user.getUsername())//userName
@@ -45,19 +44,18 @@ public class JwtUtil {
 	 * 校验token并解析token
 	 */
 	public static Map<String, Claim> verifyToken(String token) {
-		DecodedJWT jwt = null;
 		try {
 			JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET)).build();
-			jwt = verifier.verify(token);
+			DecodedJWT jwt = verifier.verify(token);
+			return jwt.getClaims();
 		} catch (Exception e) {
-
 
 			log.error(e.getMessage());
 			log.error("token解码异常");
 			//解码异常则抛出异常
 			return null;
 		}
-		return jwt.getClaims();
+
 	}
 
 }

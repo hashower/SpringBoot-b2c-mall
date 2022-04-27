@@ -5,6 +5,7 @@ import cn.luxun.mall.vo.ResultVo;
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.Claim;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,13 +25,17 @@ public class CheckTokenInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
 		String token = request.getHeader("token");
 
-		if (token == null) {
-			doResponse(response, ResultVo.fail(10001, "请登录"));
+		try {
+
+			Map<String, Claim> userClaimMap = JwtUtil.verifyToken(token);
+			return true;
+		} catch (Exception e) {
+			response.setCharacterEncoding("utf-8");
+			doResponse(response, ResultVo.fail(10001, "登陆失败"));
 		}
-		return true;
+		return false;
 	}
 
 	private void doResponse(HttpServletResponse response, ResultVo resultVO) throws IOException {
