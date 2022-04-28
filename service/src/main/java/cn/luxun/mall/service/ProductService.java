@@ -18,6 +18,7 @@ public interface ProductService {
 
 	/**
 	 * 获取每个分类下销量前6的商品
+	 *
 	 * @param root_category_id
 	 * @return
 	 */
@@ -26,6 +27,7 @@ public interface ProductService {
 
 	/**
 	 * 获取ProductVo
+	 *
 	 * @param productList
 	 * @return
 	 */

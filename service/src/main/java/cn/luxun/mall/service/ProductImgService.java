@@ -14,4 +14,6 @@ public interface ProductImgService {
 	 * @return
 	 */
 	List<ProductImg> getProductImgById(String item_id);
+
+
 }

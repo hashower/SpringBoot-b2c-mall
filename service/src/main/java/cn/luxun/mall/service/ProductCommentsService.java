@@ -1,5 +1,6 @@
 package cn.luxun.mall.service;
 
+import cn.luxun.mall.vo.ProductCommentsVo;
 import cn.luxun.mall.vo.ResultVo;
 
 public interface ProductCommentsService {
