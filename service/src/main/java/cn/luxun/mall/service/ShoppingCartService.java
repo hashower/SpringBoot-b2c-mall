@@ -5,6 +5,8 @@ import cn.luxun.mall.vo.ProductCommentsVo;
 import cn.luxun.mall.vo.ResultVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 public interface ShoppingCartService extends IService<ShoppingCart> {
 
 	/**
@@ -38,4 +40,11 @@ public interface ShoppingCartService extends IService<ShoppingCart> {
 	 */
 	ResultVo updateCartByCartIdAndCartNum(Integer cartId, String cartNum);
 
+	/**
+	 * 根据订单id获取订单列表
+	 *
+	 * @param cartIds
+	 * @return
+	 */
+	ResultVo getShoppingCartsByCartIds(List<Integer> cartIds);
 }

@@ -90,4 +90,28 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
 		this.updateById(shoppingCart);
 		return ResultVo.success("修改订单成功");
 	}
+
+	@Override
+	public ResultVo getShoppingCartsByCartIds(List<Integer> cartIds) {
+		List<ShoppingCart> shoppingCartList = this.listByIds(cartIds);
+
+		List<ShoppingCartVo> shoppingCartVoList = shoppingCartList.stream().map((item) -> {
+			ShoppingCartVo shoppingCartVo = new ShoppingCartVo();
+
+			// 拷贝
+			BeanUtils.copyProperties(item, shoppingCartVo);
+
+			// 获得img对象
+			ProductImg productImg = productImgService.getProductImgById(item.getProductId()).get(0);
+			shoppingCartVo.setProductImg(productImg);
+
+			// 获得sku对象
+			ProductSku productSku = productSkuService.getAllProductSkusByProductId(item.getProductId()).get(0);
+			shoppingCartVo.setProductSku(productSku);
+
+			return shoppingCartVo;
+		}).collect(Collectors.toList());
+
+		return ResultVo.success(shoppingCartVoList);
+	}
 }
