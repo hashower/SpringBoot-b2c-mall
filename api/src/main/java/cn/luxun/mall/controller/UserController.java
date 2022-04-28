@@ -51,7 +51,7 @@ public class UserController {
 	 * @param token
 	 * @return
 	 */
-	@ApiOperation("校验token是否过期")
+	@ApiOperation("校验token是否过期接口")
 	@PostMapping("/checkToken")
 	public ResultVo checkByToken(@RequestHeader("token") String token) {
 		return userService.checkByToken(token);
@@ -63,7 +63,7 @@ public class UserController {
 	 * @param userId
 	 * @return
 	 */
-	@ApiOperation("根据用户id获取用户信息")
+	@ApiOperation("获取用户信息接口")
 	@GetMapping("/checkToken")
 	public ResultVo getUserByUserId(@PathVariable("userId") String userId) {
 		User user = userService.getUserByUserId(userId);

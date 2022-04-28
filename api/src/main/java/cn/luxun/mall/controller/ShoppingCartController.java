@@ -37,7 +37,21 @@ public class ShoppingCartController {
 	 */
 	@ApiOperation("添加购物车接口")
 	@GetMapping("/add")
-	public ResultVo getAllShoppingCart(@RequestBody ShoppingCart shoppingCart, @RequestHeader("token") String token) {
+	public ResultVo saveProductToShoppingCart(@RequestBody ShoppingCart shoppingCart, @RequestHeader("token") String token) {
 		return shoppingCartService.saveProductToShoppingCart(shoppingCart);
+	}
+
+	/**
+	 * 添加商品到购物车
+	 *
+	 * @param cartId
+	 * @param cartNum
+	 * @return
+	 */
+	@ApiOperation("修改购物车信息")
+	@PutMapping("/update/{cid}/{cnum}")
+	public ResultVo updateCartByCartIdAndCartNum(@PathVariable("cid") Integer cartId,
+	                                             @PathVariable("cnum") String cartNum) {
+		return shoppingCartService.updateCartByCartIdAndCartNum(cartId, cartNum);
 	}
 }

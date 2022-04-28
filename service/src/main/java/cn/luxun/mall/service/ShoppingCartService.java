@@ -29,4 +29,13 @@ public interface ShoppingCartService extends IService<ShoppingCart> {
 	 */
 	ResultVo getShoppingCartByUserId(String userId);
 
+	/**
+	 * 添加商品到购物车
+	 *
+	 * @param cartId
+	 * @param cartNum
+	 * @return
+	 */
+	ResultVo updateCartByCartIdAndCartNum(Integer cartId, String cartNum);
+
 }

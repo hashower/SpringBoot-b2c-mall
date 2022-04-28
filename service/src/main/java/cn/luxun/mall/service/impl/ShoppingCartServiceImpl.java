@@ -74,4 +74,20 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
 
 		return ResultVo.success(shoppingCartVoList);
 	}
+
+	@Override
+	public ResultVo updateCartByCartIdAndCartNum(Integer cartId, String cartNum) {
+
+		// 条件构造器
+		LambdaQueryWrapper<ShoppingCart> queryWrapper = new LambdaQueryWrapper();
+
+		// 添加条件
+		queryWrapper.eq(ShoppingCart::getId, cartId);
+		ShoppingCart shoppingCart = this.getOne(queryWrapper);
+
+		// 设置数量
+		shoppingCart.setNumber(cartNum);
+		this.updateById(shoppingCart);
+		return ResultVo.success("修改订单成功");
+	}
 }
