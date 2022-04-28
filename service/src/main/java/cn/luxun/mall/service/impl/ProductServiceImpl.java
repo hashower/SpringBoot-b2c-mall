@@ -2,9 +2,13 @@ package cn.luxun.mall.service.impl;
 
 import cn.luxun.mall.entity.Product;
 import cn.luxun.mall.entity.ProductImg;
+import cn.luxun.mall.entity.ProductParams;
+import cn.luxun.mall.entity.ProductSku;
 import cn.luxun.mall.mapper.ProductMapper;
 import cn.luxun.mall.service.ProductImgService;
+import cn.luxun.mall.service.ProductParamsService;
 import cn.luxun.mall.service.ProductService;
+import cn.luxun.mall.service.ProductSkuService;
 import cn.luxun.mall.vo.ProductVo;
 import cn.luxun.mall.vo.ResultVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -13,16 +17,21 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements ProductService {
 
-	public final ProductImgService productImgService;
+	private final ProductImgService productImgService;
+	private final ProductSkuService productSkuService;
+	private final ProductParamsService productParamsService;
 
-	public ProductServiceImpl(ProductImgService productImgService) {
+	public ProductServiceImpl(ProductImgService productImgService, ProductSkuService productSkuService, ProductParamsService productParamsService) {
 		this.productImgService = productImgService;
+		this.productSkuService = productSkuService;
+		this.productParamsService = productParamsService;
 	}
 
 	@Override
@@ -63,5 +72,51 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 			productVo.setImgs(productImgList);
 			return productVo;
 		}).collect(Collectors.toList());
+	}
+
+	@Override
+	public Product getProductByProductId(String productId) {
+
+		// 条件构造器
+		LambdaQueryWrapper<Product> queryWrapper = new LambdaQueryWrapper<>();
+
+		// 添加条件
+		queryWrapper.eq(Product::getId, productId);
+		Product product = this.getOne(queryWrapper);
+		return product;
+	}
+
+	@Override
+	public ResultVo getProductBasicInfoByProductId(String productId) {
+
+		// 商品信息
+		Product product = this.getProductByProductId(productId);
+		List<Product> productList = new ArrayList<>();
+		productList.add(product);
+
+
+		// 商品图片
+		List<ProductImg> productImgList = productImgService.getProductImgById(productId);
+
+		// 商品套餐
+		List<ProductSku> productSkusList = productSkuService.getAllProductSkusByProductId(productId);
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("product", productList);
+		map.put("productSkus", productSkusList);
+		map.put("productImgs", productImgList);
+		return ResultVo.success(map);
+	}
+
+	@Override
+	public ResultVo getProductParamsByProductId(String productId) {
+
+		// 条件构造器
+		LambdaQueryWrapper<ProductParams> queryWrapper = new LambdaQueryWrapper<>();
+
+		// 添加条件
+		queryWrapper.eq(ProductParams::getProductId, productId);
+		ProductParams productParams = productParamsService.getOne(queryWrapper);
+		return ResultVo.success(productParams);
 	}
 }

@@ -1,6 +1,7 @@
 package cn.luxun.mall.vo;
 
 import cn.luxun.mall.entity.ProductImg;
+import cn.luxun.mall.entity.ProductSku;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,7 +41,10 @@ public class ProductVo {
 	// 商品内容
 	private String content;
 
-	// 图片
+	// 在查询商品的时候，关联查询商品图片信息
 	private List<ProductImg> imgs;
+
+	// 在查询商品的时候，关联查询商品套餐信息
+	private List<ProductSku> skus;
 
 }

@@ -1,6 +1,7 @@
 package cn.luxun.mall.service;
 
 import cn.luxun.mall.entity.Product;
+import cn.luxun.mall.entity.ProductSku;
 import cn.luxun.mall.vo.ProductVo;
 import cn.luxun.mall.vo.ResultVo;
 
@@ -29,4 +30,28 @@ public interface ProductService {
 	 * @return
 	 */
 	List<ProductVo> getProductVoByProduct(List<Product> productList);
+
+	/**
+	 * 根据产品id获取产品信息
+	 *
+	 * @param id
+	 * @return
+	 */
+	Product getProductByProductId(String productId);
+
+	/**
+	 * 商品基本信息查询接口
+	 *
+	 * @param productId
+	 * @return
+	 */
+	ResultVo getProductBasicInfoByProductId(String productId);
+
+	/**
+	 * 商品参数信息查询接口
+	 *
+	 * @param productId
+	 * @return
+	 */
+	ResultVo getProductParamsByProductId(String productId);
 }
