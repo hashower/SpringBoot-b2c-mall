@@ -1,6 +1,7 @@
 package cn.luxun.mall.vo;
 
 import cn.luxun.mall.entity.ProductImg;
+import cn.luxun.mall.entity.ProductSku;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -34,5 +35,7 @@ public class ShoppingCartVo {
 	private String skuProps;
 
 	private ProductImg productImg;
+
+	private ProductSku productSku;
 
 }

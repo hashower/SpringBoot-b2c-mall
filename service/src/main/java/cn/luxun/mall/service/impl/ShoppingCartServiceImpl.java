@@ -1,10 +1,12 @@
 package cn.luxun.mall.service.impl;
 
 import cn.luxun.mall.entity.ProductImg;
+import cn.luxun.mall.entity.ProductSku;
 import cn.luxun.mall.entity.ShoppingCart;
 import cn.luxun.mall.mapper.ShoppingCartMapper;
 import cn.luxun.mall.service.ProductImgService;
 import cn.luxun.mall.service.ProductService;
+import cn.luxun.mall.service.ProductSkuService;
 import cn.luxun.mall.service.ShoppingCartService;
 import cn.luxun.mall.vo.ResultVo;
 import cn.luxun.mall.vo.ShoppingCartVo;
@@ -21,10 +23,12 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
 
 	private final ProductService productService;
 
+	private final ProductSkuService productSkuService;
 	private final ProductImgService productImgService;
 
-	public ShoppingCartServiceImpl(ProductService productService, ProductImgService productImgService) {
+	public ShoppingCartServiceImpl(ProductService productService, ProductSkuService productSkuService, ProductImgService productImgService) {
 		this.productService = productService;
+		this.productSkuService = productSkuService;
 		this.productImgService = productImgService;
 	}
 
@@ -60,6 +64,10 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
 			// 获得img对象
 			ProductImg productImg = productImgService.getProductImgById(item.getProductId()).get(0);
 			shoppingCartVo.setProductImg(productImg);
+
+			// 获得sku对象
+			ProductSku productSku = productSkuService.getAllProductSkusByProductId(item.getProductId()).get(0);
+			shoppingCartVo.setProductSku(productSku);
 
 			return shoppingCartVo;
 		}).collect(Collectors.toList());
