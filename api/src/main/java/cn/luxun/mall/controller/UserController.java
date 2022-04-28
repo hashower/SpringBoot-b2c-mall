@@ -1,6 +1,7 @@
 package cn.luxun.mall.controller;
 
 import cn.luxun.mall.dto.LoginDto;
+import cn.luxun.mall.entity.User;
 import cn.luxun.mall.service.UserService;
 import cn.luxun.mall.vo.ResultVo;
 import io.swagger.annotations.Api;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
-@Api(value = "提供用户的登录和注册接口",tags = "用户管理")
+@Api(value = "提供用户的登录和注册接口", tags = "用户管理")
 public class UserController {
 
 	private final UserService userService;
@@ -56,4 +57,16 @@ public class UserController {
 		return userService.checkByToken(token);
 	}
 
+	/**
+	 * 根据用户id获取用户信息
+	 *
+	 * @param userId
+	 * @return
+	 */
+	@ApiOperation("根据用户id获取用户信息")
+	@GetMapping("/checkToken")
+	public ResultVo getUserByUserId(@PathVariable("userId") String userId) {
+		User user = userService.getUserByUserId(userId);
+		return ResultVo.success(user);
+	}
 }

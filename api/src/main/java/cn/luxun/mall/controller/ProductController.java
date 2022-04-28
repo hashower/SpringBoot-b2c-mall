@@ -1,6 +1,7 @@
 package cn.luxun.mall.controller;
 
 import cn.luxun.mall.entity.Product;
+import cn.luxun.mall.service.ProductCommentsService;
 import cn.luxun.mall.service.ProductService;
 import cn.luxun.mall.vo.ResultVo;
 import io.swagger.annotations.Api;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
 	public final ProductService productService;
+	public final ProductCommentsService productCommentsService;
 
-	public ProductController(ProductService productService) {
+	public ProductController(ProductService productService, ProductCommentsService productCommentsService) {
 		this.productService = productService;
+		this.productCommentsService = productCommentsService;
 	}
 
 	/**
@@ -63,5 +66,18 @@ public class ProductController {
 	@GetMapping("/detail-params/{productId}")
 	public ResultVo getProductParamsByProductId(@PathVariable("productId") String productId) {
 		return productService.getProductParamsByProductId(productId);
+	}
+
+	/**
+	 * 根据商品id查询商品信息
+	 *
+	 * @param productId
+	 * @return
+	 */
+	@ApiOperation("根据商品id获取商品评论")
+	@GetMapping("/detail-comments/{productId}")
+	public ResultVo getProductCommentsByProductId(@PathVariable("productId") String productId) {
+		return productCommentsService.getProductCommentsByProductId(productId);
+
 	}
 }

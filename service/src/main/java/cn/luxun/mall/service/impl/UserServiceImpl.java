@@ -10,8 +10,6 @@ import cn.luxun.mall.vo.ResultVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sun.deploy.net.HttpRequest;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -73,16 +71,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	}
 
 	@Override
-	public ResultVo findUserById(Integer user_id) {
-		User user = this.getById(user_id);
-		System.out.println(ResultVo.success(user));
-		return ResultVo.success(user);
-	}
-
-	@Override
 	public ResultVo checkByToken(String token) {
 		return ResultVo.success("token未过期");
 	}
 
+	@Override
+	public User getUserByUserId(String userId) {
+
+		// 条件构造器
+		LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(User::getId,userId);
+		User user = this.getOne(queryWrapper);
+		return user;
+	}
 
 }

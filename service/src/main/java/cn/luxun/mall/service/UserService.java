@@ -24,13 +24,6 @@ public interface UserService extends IService<User> {
 	 */
 	ResultVo loginByParams(LoginDto loginDto);
 
-	/**
-	 * 根据id寻找User
-	 *
-	 * @param user_id
-	 * @return
-	 */
-	ResultVo findUserById(Integer user_id);
 
 	/**
 	 * 校验token是否有效
@@ -39,4 +32,12 @@ public interface UserService extends IService<User> {
 	 * @return
 	 */
 	ResultVo checkByToken(String token);
+
+	/**
+	 * 根据用户id获取用户信息
+	 *
+	 * @param userId
+	 * @return
+	 */
+	User getUserByUserId(String userId);
 }
