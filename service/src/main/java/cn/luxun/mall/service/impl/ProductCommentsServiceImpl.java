@@ -8,6 +8,7 @@ import cn.luxun.mall.service.UserService;
 import cn.luxun.mall.vo.ProductCommentsVo;
 import cn.luxun.mall.vo.ResultVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -25,16 +26,23 @@ public class ProductCommentsServiceImpl extends ServiceImpl<ProductCommentsMappe
 	}
 
 	@Override
-	public ResultVo getProductCommentsByProductId(String productId) {
+	public ResultVo getProductCommentsByProductId(String productId, int pageNum, int pageSize) {
+
+		// 分页构造器
+		Page<ProductComments> pageInfo = new Page<>(pageNum, pageSize);
+		Page<ProductCommentsVo> productCommentsVoPage = new Page<>();
 
 		// 条件构造器
 		LambdaQueryWrapper<ProductComments> queryWrapper = new LambdaQueryWrapper<>();
 
 		// 添加条件
 		queryWrapper.eq(ProductComments::getProductId, productId);
-		List<ProductComments> list = this.list(queryWrapper);
+		this.page(pageInfo, queryWrapper);
 
-		List<ProductCommentsVo> productCommentsVoList = list.stream().map((item) -> {
+		BeanUtils.copyProperties(pageInfo, productCommentsVoPage, "records");
+
+		// 处理对象 给每个comments对象加进user对象
+		List<ProductCommentsVo> productCommentsVoList = pageInfo.getRecords().stream().map((item) -> {
 			ProductCommentsVo productCommentsVo = new ProductCommentsVo();
 
 			// 拷贝
@@ -46,6 +54,8 @@ public class ProductCommentsServiceImpl extends ServiceImpl<ProductCommentsMappe
 
 			return productCommentsVo;
 		}).collect(Collectors.toList());
-		return ResultVo.success(productCommentsVoList);
+		productCommentsVoPage.setRecords(productCommentsVoList);
+
+		return ResultVo.success(productCommentsVoPage);
 	}
 }

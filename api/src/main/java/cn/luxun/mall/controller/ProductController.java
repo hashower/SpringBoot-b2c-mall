@@ -75,9 +75,11 @@ public class ProductController {
 	 * @return
 	 */
 	@ApiOperation("根据商品id获取商品评论")
-	@GetMapping("/detail-comments/{productId}")
-	public ResultVo getProductCommentsByProductId(@PathVariable("productId") String productId) {
-		return productCommentsService.getProductCommentsByProductId(productId);
+	@GetMapping("/detail-comments/{productId}/{pageNum}/{pageSize}")
+	public ResultVo getProductCommentsByProductId(@PathVariable("productId") String productId,
+	                                              @PathVariable("pageNum") int pageNum,
+	                                              @PathVariable("pageSize") int pageSize) {
+		return productCommentsService.getProductCommentsByProductId(productId, pageNum, pageSize);
 
 	}
 }

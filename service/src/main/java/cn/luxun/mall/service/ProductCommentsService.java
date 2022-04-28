@@ -10,5 +10,5 @@ public interface ProductCommentsService {
 	 * @param productId
 	 * @return
 	 */
-	ResultVo getProductCommentsByProductId(String productId);
+	ResultVo getProductCommentsByProductId(String productId, int pageNum, int pageSize);
 }
