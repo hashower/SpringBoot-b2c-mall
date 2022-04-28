@@ -11,4 +11,12 @@ public interface ProductCommentsService {
 	 * @return
 	 */
 	ResultVo getProductCommentsByProductId(String productId, int pageNum, int pageSize);
+
+	/**
+	 * 根据商品id查询商品评价统计
+	 *
+	 * @param productId
+	 * @return
+	 */
+	ResultVo getProductCommentCountByProductId(String productId);
 }

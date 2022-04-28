@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,5 +58,44 @@ public class ProductCommentsServiceImpl extends ServiceImpl<ProductCommentsMappe
 		productCommentsVoPage.setRecords(productCommentsVoList);
 
 		return ResultVo.success(productCommentsVoPage);
+	}
+
+	@Override
+	public ResultVo getProductCommentCountByProductId(String productId) {
+
+		// 查询当前商品评价的总数
+		LambdaQueryWrapper<ProductComments> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(ProductComments::getProductId, productId);
+		long total = this.count(queryWrapper);
+
+		// 好评 1好评，0中评，-1差评
+		queryWrapper.clear();
+		queryWrapper.eq(ProductComments::getProductId, productId);
+		queryWrapper.eq(ProductComments::getCommType, 1);
+		long good = this.count(queryWrapper);
+
+		// 中评
+		queryWrapper.clear();
+		queryWrapper.eq(ProductComments::getProductId, productId);
+		queryWrapper.eq(ProductComments::getCommType, 0);
+		long medium = this.count(queryWrapper);
+
+		// 差评
+		queryWrapper.clear();
+		queryWrapper.eq(ProductComments::getProductId, productId);
+		queryWrapper.eq(ProductComments::getCommType, 0);
+		long bad = this.count(queryWrapper);
+
+		// 好评率
+		double percent = (Double.parseDouble(good + "") / Double.parseDouble(total + "")) * 100;
+		String percentValue = (percent + "").substring(0, (percent + "").lastIndexOf(".") + 3);
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("total", total);
+		map.put("goodTotal", good);
+		map.put("midTotal", medium);
+		map.put("badTotal", bad);
+		map.put("percent", percentValue);
+		return ResultVo.success(map);
 	}
 }

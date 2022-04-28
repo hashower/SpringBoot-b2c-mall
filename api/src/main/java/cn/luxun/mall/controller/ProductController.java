@@ -76,10 +76,20 @@ public class ProductController {
 	 */
 	@ApiOperation("根据商品id获取商品评论")
 	@GetMapping("/detail-comments/{productId}/{pageNum}/{pageSize}")
-	public ResultVo getProductCommentsByProductId(@PathVariable("productId") String productId,
-	                                              @PathVariable("pageNum") int pageNum,
-	                                              @PathVariable("pageSize") int pageSize) {
+	public ResultVo getProductCommentsByProductId(@PathVariable("productId") String productId, @PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
 		return productCommentsService.getProductCommentsByProductId(productId, pageNum, pageSize);
-
 	}
+
+	/**
+	 * 根据商品id查询商品评价统计
+	 *
+	 * @param productId
+	 * @return
+	 */
+	@ApiOperation("商品评价统计查询接口")
+	@GetMapping("/detail-commentsCount/{productId}/}")
+	public ResultVo getProductCommentCountByProductId(@PathVariable("productId") String productId) {
+		return productCommentsService.getProductCommentCountByProductId(productId);
+	}
+
 }
