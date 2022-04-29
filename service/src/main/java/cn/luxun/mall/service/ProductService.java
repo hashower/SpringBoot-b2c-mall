@@ -56,4 +56,23 @@ public interface ProductService {
 	 * @return
 	 */
 	ResultVo getProductParamsByProductId(String productId);
+
+	/**
+	 * 三级分类id分页查询商品信息
+	 * 根据类别查询商品接口
+	 *
+	 * @param cid
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	ResultVo getProductsbyCategoryId(int cid, int pageNum, int pageSize);
+
+	/**
+	 * 根据类别查询商品品牌
+	 *
+	 * @param cid
+	 * @return
+	 */
+	ResultVo getBrandsbyCategoryId(String cid);
 }

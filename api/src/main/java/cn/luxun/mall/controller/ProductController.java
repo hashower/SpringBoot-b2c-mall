@@ -6,6 +6,7 @@ import cn.luxun.mall.service.ProductService;
 import cn.luxun.mall.vo.ResultVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -90,6 +91,34 @@ public class ProductController {
 	@GetMapping("/detail-commentsCount/{productId}/}")
 	public ResultVo getProductCommentCountByProductId(@PathVariable("productId") String productId) {
 		return productCommentsService.getProductCommentCountByProductId(productId);
+	}
+
+
+	/**
+	 * 三级分类id分页查询商品信息
+	 * 根据类别查询商品接口
+	 *
+	 * @param cid
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	@ApiOperation("根据类别查询商品接口")
+	@GetMapping("/listbycid/{cid}")
+	public ResultVo getProductsbyCategoryId(@PathVariable("cid") int cid, int pageNum, int pageSize) {
+		return productService.getProductsbyCategoryId(cid, pageNum, pageSize);
+	}
+
+	/**
+	 * 根据类别查询商品品牌
+	 *
+	 * @param cid
+	 * @return
+	 */
+	@ApiOperation("根据类别查询商品品牌接口")
+	@GetMapping("/listbrans/{cid}")
+	public ResultVo getBrandsbyCategoryId(@PathVariable("cid") String cid) {
+		return productService.getBrandsbyCategoryId(cid);
 	}
 
 }

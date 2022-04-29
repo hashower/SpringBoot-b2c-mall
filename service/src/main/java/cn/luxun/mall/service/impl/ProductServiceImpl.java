@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -118,5 +119,37 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 		queryWrapper.eq(ProductParams::getProductId, productId);
 		ProductParams productParams = productParamsService.getOne(queryWrapper);
 		return ResultVo.success(productParams);
+	}
+
+	@Override
+	public ResultVo getProductsbyCategoryId(int cid, int pageNum, int pageSize) {
+		LambdaQueryWrapper<Product> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(Product::getCategoryId, cid);
+
+		List<Product> list = this.list(queryWrapper);
+		Map<String, Object> map = new HashMap<>();
+		map.put("count", list.size());
+		map.put("list", list);
+		return ResultVo.success(map);
+	}
+
+	@Override
+	public ResultVo getBrandsbyCategoryId(String cid) {
+		LambdaQueryWrapper<Product> productLambdaQueryWrapper = new LambdaQueryWrapper<>();
+		productLambdaQueryWrapper.eq(Product::getCategoryId, cid);
+
+		List<Product> list = this.list(productLambdaQueryWrapper);
+		List<String> brandList = new ArrayList<>();
+		for (Product product : list) {
+
+			ProductParams productParams = productParamsService.getProductParamsByProductId(product.getId());
+			String brands = productParams.getBrand();
+
+			if (!brandList.contains(brands)) {
+				brandList.add(brands);
+			}
+		}
+
+		return ResultVo.success(brandList);
 	}
 }
