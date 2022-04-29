@@ -7,14 +7,19 @@ import cn.luxun.mall.mapper.OrderMapper;
 import cn.luxun.mall.service.OrderItemService;
 import cn.luxun.mall.service.OrderService;
 import cn.luxun.mall.service.ShoppingCartService;
+import cn.luxun.mall.vo.OrdersVO;
 import cn.luxun.mall.vo.ResultVo;
 import cn.luxun.mall.vo.ShoppingCartVo;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implements OrderService {
@@ -90,6 +95,32 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
 		}
 
 
+	}
+
+	@Override
+	public ResultVo getOrderStatusByOrderId(String orderId) {
+		LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(Orders::getId, orderId);
+		Orders order = this.getOne(queryWrapper);
+		return ResultVo.success(order.getStatus());
+	}
+
+	@Override
+	public ResultVo getAllOrdersPageByUserIdAndStatus(String userId, String status, int pageNum, int pageSize) {
+		LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(Orders::getUserId, userId);
+		queryWrapper.eq(Orders::getStatus, status);
+		Page<Orders> pageInfo = new Page<>(pageNum, pageSize);
+		Page<Orders> page = this.page(pageInfo, queryWrapper);
+
+
+		List<OrdersVO> ordersVOList = page.getRecords().stream().map((item) -> {
+			OrdersVO ordersVO = new OrdersVO();
+			BeanUtils.copyProperties(item, ordersVO);
+			ordersVO.setOrderItems(orderItemService.getOrderItemsByOrderId(item.getId()));
+			return ordersVO;
+		}).collect(Collectors.toList());
+		return ResultVo.success(ordersVOList);
 	}
 
 

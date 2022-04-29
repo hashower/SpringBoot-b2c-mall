@@ -12,6 +12,7 @@ import cn.luxun.mall.service.ProductSkuService;
 import cn.luxun.mall.vo.ProductVo;
 import cn.luxun.mall.vo.ResultVo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -134,7 +135,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 	}
 
 	@Override
-	public ResultVo getBrandsbyCategoryId(String cid) {
+	public ResultVo getBrandsByCategoryId(String cid) {
 		LambdaQueryWrapper<Product> productLambdaQueryWrapper = new LambdaQueryWrapper<>();
 		productLambdaQueryWrapper.eq(Product::getCategoryId, cid);
 
@@ -151,5 +152,38 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 		}
 
 		return ResultVo.success(brandList);
+	}
+
+	@Override
+	public ResultVo getProductsByProductName(String keyword, int pageNum, int pageSize) {
+		Page<Product> pageInfo = new Page<>(pageNum, pageSize);
+
+		LambdaQueryWrapper<Product> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.like(Product::getName, keyword);
+
+		Page<Product> page = this.page(pageInfo, queryWrapper);
+		return ResultVo.success(page.getRecords());
+	}
+
+	@Override
+	public ResultVo getBrandsByProductName(String keyword) {
+		LambdaQueryWrapper<Product> productLambdaQueryWrapper = new LambdaQueryWrapper<>();
+		productLambdaQueryWrapper.like(Product::getName, keyword);
+
+		List<Product> list = this.list(productLambdaQueryWrapper);
+
+		List<String> brandList = new ArrayList<>();
+		for (Product product : list) {
+
+			ProductParams productParams = productParamsService.getProductParamsByProductId(product.getId());
+			System.out.println("@" + productParams);
+			String brands = productParams.getBrand();
+
+			if (!brandList.contains(brands)) {
+				brandList.add(brands);
+			}
+		}
+
+		return ResultVo.success(list);
 	}
 }

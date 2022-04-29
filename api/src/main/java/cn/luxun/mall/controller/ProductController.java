@@ -117,8 +117,35 @@ public class ProductController {
 	 */
 	@ApiOperation("根据类别查询商品品牌接口")
 	@GetMapping("/listbrans/{cid}")
-	public ResultVo getBrandsbyCategoryId(@PathVariable("cid") String cid) {
-		return productService.getBrandsbyCategoryId(cid);
+	public ResultVo getBrandsByCategoryId(@PathVariable("cid") String cid) {
+		return productService.getBrandsByCategoryId(cid);
 	}
+
+	/**
+	 * 根据关键词查询商品
+	 *
+	 * @param keyword
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	@ApiOperation("根据关键词查询商品接口")
+	@GetMapping("/listbykeyword")
+	public ResultVo getProductsByProductName(String keyword, int pageNum, int pageSize) {
+		return productService.getProductsByProductName(keyword, pageNum, pageSize);
+	}
+
+	/**
+	 * 根据关键词查询商品品牌
+	 *
+	 * @param keyword
+	 * @return
+	 */
+	@ApiOperation("根据关键词查询商品品牌接口")
+	@GetMapping("/listbrands-keyword")
+	public ResultVo getBrandsByProductName(String keyword) {
+		return productService.getBrandsByProductName(keyword);
+	}
+
 
 }

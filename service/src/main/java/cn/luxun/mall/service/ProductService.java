@@ -74,5 +74,23 @@ public interface ProductService {
 	 * @param cid
 	 * @return
 	 */
-	ResultVo getBrandsbyCategoryId(String cid);
+	ResultVo getBrandsByCategoryId(String cid);
+
+	/**
+	 * 根据关键词查询商品
+	 *
+	 * @param keyword
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	ResultVo getProductsByProductName(String keyword, int pageNum, int pageSize);
+
+	/**
+	 * 根据关键词查询商品品牌
+	 *
+	 * @param keyword
+	 * @return
+	 */
+	ResultVo getBrandsByProductName(String keyword);
 }
