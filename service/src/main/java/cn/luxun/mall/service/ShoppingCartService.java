@@ -1,8 +1,8 @@
 package cn.luxun.mall.service;
 
 import cn.luxun.mall.entity.ShoppingCart;
-import cn.luxun.mall.vo.ProductCommentsVo;
 import cn.luxun.mall.vo.ResultVo;
+import cn.luxun.mall.vo.ShoppingCartVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -46,5 +46,13 @@ public interface ShoppingCartService extends IService<ShoppingCart> {
 	 * @param cartIds
 	 * @return
 	 */
-	ResultVo getShoppingCartsByCartIds(List<Integer> cartIds);
+	List<ShoppingCartVo> getShoppingCartsByCartIds(List<Integer> cartIds);
+
+	/**
+	 * 根据订单id删除订单
+	 *
+	 * @param cartId
+	 * @return
+	 */
+	ResultVo deleteCartByCartId(int cartId);
 }

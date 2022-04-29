@@ -3,6 +3,7 @@ package cn.luxun.mall.controller;
 import cn.luxun.mall.entity.ShoppingCart;
 import cn.luxun.mall.service.ShoppingCartService;
 import cn.luxun.mall.vo.ResultVo;
+import cn.luxun.mall.vo.ShoppingCartVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.transaction.ReactiveTransaction;
@@ -67,6 +68,7 @@ public class ShoppingCartController {
 	@ApiOperation("获取已选购物车信息的接口")
 	@GetMapping("/listbycids")
 	public ResultVo getShoppingCartsByCartIds(@RequestParam("cartIds") List<Integer> cartIds) {
-		return shoppingCartService.getShoppingCartsByCartIds(cartIds);
+		List<ShoppingCartVo> shoppingCartVoList = shoppingCartService.getShoppingCartsByCartIds(cartIds);
+		return ResultVo.success(shoppingCartVoList);
 	}
 }

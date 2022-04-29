@@ -92,7 +92,7 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
 	}
 
 	@Override
-	public ResultVo getShoppingCartsByCartIds(List<Integer> cartIds) {
+	public List<ShoppingCartVo> getShoppingCartsByCartIds(List<Integer> cartIds) {
 		List<ShoppingCart> shoppingCartList = this.listByIds(cartIds);
 
 		List<ShoppingCartVo> shoppingCartVoList = shoppingCartList.stream().map((item) -> {
@@ -112,6 +112,12 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
 			return shoppingCartVo;
 		}).collect(Collectors.toList());
 
-		return ResultVo.success(shoppingCartVoList);
+		return shoppingCartVoList;
+	}
+
+	@Override
+	public ResultVo deleteCartByCartId(int cartId) {
+		this.removeById(cartId);
+		return ResultVo.success("删除订单成功");
 	}
 }

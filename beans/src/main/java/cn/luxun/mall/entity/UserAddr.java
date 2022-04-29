@@ -8,7 +8,7 @@ import java.util.Date;
 public class UserAddr {
 
     // 地址主键id
-    private String addrId;
+    private String id;
 
     // 用户ID
     private String userId;
