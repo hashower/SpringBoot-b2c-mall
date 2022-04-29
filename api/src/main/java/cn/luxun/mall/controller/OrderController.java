@@ -3,14 +3,9 @@ package cn.luxun.mall.controller;
 import cn.luxun.mall.entity.Orders;
 import cn.luxun.mall.service.OrderService;
 import cn.luxun.mall.vo.ResultVo;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,11 +20,7 @@ public class OrderController {
 	}
 
 	@PostMapping("/add")
-	public ResultVo addOrderByParams(@RequestBody Orders order) {
-		List<Integer> cartIds = new ArrayList<>();
-		cartIds.add(5);
-		cartIds.add(7);
+	public ResultVo addOrderByParams(@RequestParam List<Integer> cartIds, @RequestBody Orders order) {
 		return orderService.addOrderToShoppingCart(cartIds, order);
-
 	}
 }

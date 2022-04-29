@@ -4,13 +4,14 @@ import cn.luxun.mall.entity.OrderItem;
 import cn.luxun.mall.entity.Orders;
 import cn.luxun.mall.entity.ProductSku;
 import cn.luxun.mall.mapper.OrderMapper;
+import cn.luxun.mall.service.OrderItemService;
 import cn.luxun.mall.service.OrderService;
 import cn.luxun.mall.service.ShoppingCartService;
 import cn.luxun.mall.vo.ResultVo;
 import cn.luxun.mall.vo.ShoppingCartVo;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -19,12 +20,15 @@ import java.util.*;
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implements OrderService {
 
 	private final ShoppingCartService shoppingCartService;
+	private final OrderItemService orderItemService;
 
-	public OrderServiceImpl(ShoppingCartService shoppingCartService) {
+	public OrderServiceImpl(ShoppingCartService shoppingCartService, OrderItemService orderItemService) {
 		this.shoppingCartService = shoppingCartService;
+		this.orderItemService = orderItemService;
 	}
 
 	@Override
+	@Transactional
 	public ResultVo addOrderToShoppingCart(List<Integer> cartIds, Orders order) {
 		// 根据 cartIds查询当前订单中关联的购物车记录详情  包括库存
 
@@ -60,7 +64,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
 				int cnum = Integer.parseInt(cart.getNumber());
 				String itemId = System.currentTimeMillis() + "" + new Random().nextInt(8999) + 1000;
 				OrderItem orderItem = new OrderItem(itemId, orderId, cart.getProductId(), cart.getProductSku().getName(), cart.getProductImg().getUrl(), cart.getSkuId(), cart.getProductSku().getName(), new BigDecimal(cart.getProductSku().getSellPrice()), cnum, new BigDecimal(cart.getProductSku().getSellPrice() * cnum), new Date(), new Date(), 0);
+				System.out.println("@@@" + orderItem);
+				orderItemService.save(orderItem);
 			}
+
 			// 扣减库存：根据套餐ID修改套餐库存量
 			for (ShoppingCartVo cart : carts) {
 				String skuId = cart.getSkuId();
@@ -68,7 +75,6 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
 				ProductSku productSku = new ProductSku();
 				productSku.setId(skuId);
 				productSku.setStock(newStock);
-
 			}
 			Map<String, String> map = new HashMap<>();
 			// 删除购物车：当购物车中的记录购买成功之后，购物车中对应做删除操作
